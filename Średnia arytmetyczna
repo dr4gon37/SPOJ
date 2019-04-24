@@ -1,0 +1,34 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main()
+{
+
+	int amount;
+	cin >> amount;
+	int n;
+	int tab[100];
+	int liczba;
+	double average = 0.0;
+
+	for (int i = 0; i < amount; i++)
+	{
+		cin >> n;
+		for (int j = 0; j < n; j++)
+		{
+			cin >> tab[j];
+			average += tab[j];
+		}
+		average /= n;
+		double difference = abs(average - tab[0]);
+		int theBestNumber = tab[0];
+		for (int j = 1; j < n; j++) if (abs(tab[j] - average) < difference)
+		{
+			difference = abs(tab[j] - average);
+			theBestNumber = tab[j];
+		}
+		cout << theBestNumber << endl;
+		average = 0.0;
+	}
