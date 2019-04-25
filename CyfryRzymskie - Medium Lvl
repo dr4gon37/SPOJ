@@ -1,0 +1,211 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+pair <char, int> romanDigits[7] =
+{
+	make_pair('I', 1),//0
+	make_pair('V', 5),//1
+	make_pair('X', 10),//2
+	make_pair('L', 50),//3
+	make_pair('C', 100),//4
+	make_pair('D', 500),//5
+	make_pair('M', 1000)//6
+};
+
+void changeFromRomanToArabic(const string & str, int &n)
+{
+  bool isPair = false;
+	if (str.size() > 1)
+	{
+		for (int i = 0; i < str.size(); i++)
+		{
+		    isPair = false;
+			if (!isPair && str[i] == romanDigits[0].first && str[i + 1] == romanDigits[1].first)
+			{
+				n += 5 - 1;
+				isPair = true;
+			}
+
+			else if (!isPair && str[i] == romanDigits[0].first && str[i + 1] == romanDigits[2].first)
+			{
+				n += 10 - 1;
+				isPair = true;
+			}
+
+			else if (!isPair &&  str[i] == romanDigits[2].first && str[i + 1] == romanDigits[3].first)
+			{
+				n += 50 - 10;
+				isPair = true;
+			}
+
+			else if (!isPair && str[i] == romanDigits[2].first && str[i + 1] == romanDigits[4].first)
+			{
+				n += 100 - 10;
+				isPair = true;
+			}
+
+			else if ( !isPair && str[i] == romanDigits[4].first && str[i + 1] == romanDigits[5].first)
+			{
+				n += 500 - 100;
+				isPair = true;
+			}
+
+			else if (!isPair && str[i] == romanDigits[4].first && str[i + 1] == romanDigits[6].first)
+			{
+				n += 1000 - 100;
+				isPair = true;
+			}
+            if (isPair)
+            {
+                i++;
+            }
+			else
+			{
+                for (int k = 0; k < 7; k++) if (romanDigits[k].first == str[i])
+			    {
+					  n += romanDigits[k].second;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (str[0] == romanDigits[0].first)
+		{
+			n = romanDigits[0].second;
+		}
+		else if (str[0] == romanDigits[1].first)
+		{
+			n = romanDigits[1].second;
+		}
+		else if (str[0] == romanDigits[2].first)
+		{
+			n = romanDigits[2].second;
+		}
+		else if (str[0] == romanDigits[3].first)
+		{
+			n = romanDigits[3].second;
+		}
+		else if (str[0] == romanDigits[4].first)
+		{
+			n = romanDigits[4].second;
+		}
+		else if (str[0] == romanDigits[5].first)
+		{
+			n = romanDigits[5].second;
+		}
+		else if (str[0] == romanDigits[6].first)
+		{
+			n = romanDigits[6].second;
+		}
+	}
+
+}
+
+string FromArabicToRoman(int n)
+{
+	int thousands = (n / 1000) % 10;
+	int hundreds = (n / 100) % 10;
+	int tens = (n / 10) % 10;
+	int ones = n % 10;
+	string number = "";
+	for (int i = 0; i < thousands; i++)
+	{
+		number += 'M';
+	}
+	//=======hundreds
+	if (hundreds < 4)
+	{
+		for (int i = 0; i < hundreds; i++)
+		{
+			number += 'C';
+		}
+	}
+	else if (hundreds == 4)
+	{
+		number += "CD";
+	}
+	else if (hundreds == 9)
+	{
+		number += "CM";
+	}
+	else
+	{
+		int amount = hundreds - 5;
+		number += 'D';
+		for (int i = 0; i < amount; i++)
+		{
+			number += 'C';
+		}
+	}
+	//=========dziesiatki
+	if (tens < 4)
+	{
+		for (int i = 0; i < tens; i++)
+		{
+			number += 'X';
+		}
+	}
+	else if (tens == 4)
+	{
+		number += "XL";
+	}
+	else if (tens == 9)
+	{
+		number += "XC";
+	}
+	else
+	{
+		int amount = tens - 5;
+		number += 'L';
+		for (int i = 0; i < amount; i++)
+		{
+			number += 'X';
+		}
+	}
+	//jednosci
+	if (ones < 4)
+	{
+		for (int i = 0; i < ones; i++)
+		{
+			number += 'I';
+		}
+	}
+	else if (ones == 4)
+	{
+		number += "IV";
+	}
+	else if (ones == 9)
+	{
+		number += "IX";
+	}
+	else
+	{
+		int amount = ones - 5;
+		number += 'V';
+		for (int i = 0; i < amount; i++)
+		{
+			number += 'I';
+		}
+	}
+	return number;
+}
+
+
+int main()
+{
+	string str1, str2;
+	int j = 0;
+	int n1 = 0, n2 = 0;
+	while (cin >> str1 >> str2)
+	{
+		changeFromRomanToArabic(str1, n1);
+		changeFromRomanToArabic(str2, n2);
+		//cout << n1 << " " << n2 << endl;
+		//cout << n1+ n2 << endl;
+		cout << FromArabicToRoman(n1 + n2) << endl;
+		n1 = 0, n2 = 0;
+	}
+}
