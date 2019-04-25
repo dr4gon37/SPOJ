@@ -1,0 +1,38 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+
+
+int main()
+{
+	int amount;
+	cin >> amount;
+	int number;
+	bool isPrime = true;
+	for (int i = 0; i < amount; i++)
+	{
+		isPrime = true;
+		cin >> number;	
+		int dividersAmount = sqrt(number);
+		if (number < 2)
+		{
+			cout << "NIE" << endl;
+			isPrime = false;
+		}
+		for (int i = 2; i <= dividersAmount; i++) 
+		{
+			if (number % i == 0)
+			{
+				cout << "NIE" << endl;
+				isPrime = false;
+				break;
+			}			
+		}
+		if (isPrime)
+		{
+			cout << "TAK" << endl;
+		}
+	}
+}
