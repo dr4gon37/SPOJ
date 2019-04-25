@@ -1,0 +1,54 @@
+#include "pch.h"
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+
+void shorterString(char* tab)
+{
+	int occuries[26];
+	for (int i = 0; i < 26; i++)
+	{
+		occuries[i] = 0;
+	}
+
+
+	char newTab[200] = "";
+	int j = 0;
+	for (int i = 0; i < 200 && tab[i] != '\0'; i++) 
+	{
+		occuries[tab[i] - 'A']++;
+		if (tab[i] != tab[i + 1])
+		{
+			if (occuries[tab[i] - 'A'] >= 3)
+			{
+				cout << tab[i] << occuries[tab[i] - 'A'];
+				occuries[tab[i] - 'A'] = 0;
+			}
+			else
+			{
+				for (int j = 0; j < occuries[tab[i] - 'A']; j++)
+				{
+					cout << tab[i];
+				}
+				occuries[tab[i] - 'A'] = 0;
+			}
+		}
+
+	}
+
+	cout << endl;
+}
+
+int main()
+{
+	int amount;
+	cin >> amount;
+	char tab[200] = "";
+	while (cin >> tab)
+	{
+		
+		shorterString(tab);
+	}
+}
