@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+
+
+int main()
+{
+	int input;
+	cin >> input;
+	int i = 0;
+	int difference = 0;
+	int height = 1;
+	int tab[10000][10000] = { 0 };
+	int score = 1;
+	while (height <= input)
+	{
+		difference += 1;
+		height += difference;
+		i++;
+	}
+
+	int xMax = 1, yMax = 0;
+	int xStart = 0;
+	int x = yMax;
+	bool stop = true;
+	while (stop)
+	{
+		for (int y = xStart; y < xMax; y++)
+		{
+			tab[y][x] = score;
+			score++;
+			if (score == input+1)
+			{
+				stop = false;
+				break;
+			}
+			x--;
+		}
+		xMax++;
+		yMax++;
+		x = yMax;
+		xStart = 0;
+	}
+	for (int y = yMax-1; y >= 0; y--)
+	{
+		for (int x = 0; x < xMax; x++)
+		{
+			if (tab[x][y]!= 0)
+				cout << tab[x][y] << " ";
+		}
+		cout << endl;
+	}
+}
