@@ -9,18 +9,9 @@ int main()
 {
 	int input;
 	cin >> input;
-	int i = 0;
-	int difference = 0;
-	int height = 1;
-	int tab[10000][10000] = { 0 };
-	int score = 1;
-	while (height <= input)
-	{
-		difference += 1;
-		height += difference;
-		i++;
-	}
-
+	int tab[5000][5000] = { 0 }; // this is huge tab, maybe it's better idea to intialize it with new, but 
+	//for the spoj test i located in on the heap because it is faster and we have enough memory
+	int score = 0;
 	int xMax = 1, yMax = 0;
 	int xStart = 0;
 	int x = yMax;
@@ -29,9 +20,9 @@ int main()
 	{
 		for (int y = xStart; y < xMax; y++)
 		{
+		    score++;
 			tab[y][x] = score;
-			score++;
-			if (score == input+1)
+			if (score == input)
 			{
 				stop = false;
 				break;
