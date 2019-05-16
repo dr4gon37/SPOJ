@@ -1,0 +1,82 @@
+#include <iostream>
+
+using namespace std;
+
+string operator + (string n1, string n2)
+{
+    if(n1.size() < n2.size())
+        swap(n1, n2);
+        
+    int sizeNumber1 = n1.size();
+    int sizeNumber2 = n2.size();
+    int j = sizeNumber1-1;
+    
+    for (int i = sizeNumber2 -1; i >=0; i--, j--)
+        n1[j] += n2[i] - 48;
+        
+    for (int i = sizeNumber1-1; i >=1; i--)
+    {
+        if (n1[i] > 57)
+        {
+            int number = n1[i] - 48;
+            n1[i] = number % 10 + 48;
+            n1[i-1] = (n1[i-1] - 48) + number/10 + 48;
+        }
+    }
+    
+    if (n1[0] > 57)
+    {
+        string temp ="";
+        int number = n1[0] - 48;
+        temp += number / 10 + 48; 
+        n1[0] = number % 10 + 48;
+        n1.insert(0, temp);
+    }
+       
+    return n1;
+}
+
+
+void pascalTraingle(string *(*& tab), int row)
+{
+    tab = new string *[row+1];
+    for (int i = 0; i <= row; i++)
+    {
+        tab[i] = new string [i+1];
+        tab[i][0] = "1";
+        tab[i][i] = "1";
+        for (int j = 0; j < i-1; j++)
+        {
+            tab[i][j+1] = tab[i-1][j] + tab[i-1][j+1];
+        }
+    }
+}
+
+void displayPascalTriangle (string ** tab, int row)
+{
+    for (int i = 0; i <= row; i++)
+    {
+        cout << tab[row][i] << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    int amountOfTests;
+    cin >> amountOfTests;
+    int row;
+    string **tab;
+    pascalTraingle(tab, 102);
+    for (int i = 0; i < amountOfTests; i++)
+    {
+        cin >> row;
+        displayPascalTriangle(tab, row);
+    }
+    
+    for (int i = 0; i < row; i++)
+        delete [] tab[i];
+    delete [] tab;
+    
+    return 0;
+}
